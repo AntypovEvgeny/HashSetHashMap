@@ -7,30 +7,35 @@ public class Main {
             " ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse" +
             " cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa" +
             " qui officia deserunt mollit anim id est laborum.";
+    private static final String textWithoutSpaces = text.replaceAll(" ", "");
 
     public static void main(String[] args) {
-        int maxValue = 1;
-        int minValue = Integer.MAX_VALUE;
-        Map<Character, Integer> map = new HashMap<>();
-        for (int i = 0; i < text.length(); i++) {
-            if (!map.containsKey(text.charAt(i))) {
-                map.put(text.charAt(i), 1);
-            } else {
-                int value = map.get(text.charAt(i));
-                ++value;
-                map.put(text.charAt(i), value);
-            }
 
+        int maxValue = 1;
+        char maxKey = 0;
+        int minValue = Integer.MAX_VALUE;
+        char minKey = 0;
+
+        Map<Character, Integer> map = new HashMap<>();
+        for (int i = 0; i < textWithoutSpaces.length(); i++) {
+            if (!map.containsKey(textWithoutSpaces.charAt(i))) {
+                map.put(textWithoutSpaces.charAt(i), 1);
+            } else {
+                int value = map.get(textWithoutSpaces.charAt(i));
+                ++value;
+                map.put(textWithoutSpaces.charAt(i), value);
+            }
         }
         for (Map.Entry<Character, Integer> kv : map.entrySet()) {
             if (kv.getValue() > maxValue) {
+                maxKey = kv.getKey();
                 maxValue = kv.getValue();
-                System.out.println("Наибольшее количество знаков - " + kv.getKey() + " - " + maxValue);
-            }
-            else if (kv.getValue() < minValue) {
+            } else if (kv.getValue() < minValue) {
+                minKey = kv.getKey();
                 minValue = kv.getValue();
-                System.out.println("Наименьшее количество символов - " + kv.getKey() + " - " + minValue);
             }
         }
+        System.out.println("Наибольшее количество символов - " + maxKey + " - " + maxValue);
+        System.out.println("Наименьшее количество символов - " + minKey + " - " + minValue);
     }
 }
